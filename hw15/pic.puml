@@ -1,0 +1,318 @@
+@startuml
+class MyInterface {
+- UmlInterface umlInterface
+- ArrayList<String> parents
++ <<Create>> MyInterface(UmlInterface)
++ UmlInterface getUmlInterface()
++ String getId()
++ String getName()
++ void addParent(String)
++ ArrayList<String> getOther()
++ HashSet<String> getParents()
++ boolean checkR004(HashSet<UmlClassOrInterface>)
+}
+class Main {
++ {static} void main(String[])
+}
+class MyLifeline {
+- UmlLifeline umlLifeline
+- String creator
+- int found
+- int lost
+- boolean deleted
++ <<Create>> MyLifeline(UmlLifeline)
++ UmlLifeline getLifeline()
++ String getId()
++ String getName()
++ String getRepresent()
++ void addCreator(String)
++ void addFound()
++ void addLost()
++ String getCreator(String)
++ Pair<Integer,Integer> getParticipantLostAndFound()
++ boolean isDeleted()
++ void setDeleted(boolean)
+}
+class InteractionProcess {
+- {static} InteractionProcess INTERACTION_PROCESS
+- HashMap<String,String> name2id
+- HashMap<String,MyInteraction> id2Interaction
+- HashMap<String,String> collaboration2id
++ {static} InteractionProcess getInstance()
++ void dealInteraction(HashSet<UmlInteraction>)
++ void dealAttribute(HashSet<UmlAttribute>)
++ boolean dealLifeLine(HashSet<UmlLifeline>)
++ void dealEndPoint(HashSet<UmlEndpoint>)
++ boolean dealMessage(ArrayList<UmlMessage>)
++ int getParticipantCount(String)
++ UmlLifeline getParticipantCreator(String,String)
++ Pair<Integer,Integer> getParticipantLostAndFound(String,String)
++ String getId(String)
+}
+class MyClass {
+- UmlClass umlClass
+- String parent
+- int subCount
+- HashSet<ReferenceType> references
+- HashSet<String> realizations
+- HashSet<MyOperation> operations
+- HashMap<String,Integer> attributes
++ <<Create>> MyClass(UmlClass)
++ UmlClass getUmlClass()
++ String getId()
++ String getParent()
++ void setParent(String)
++ int getSubClassCount()
++ void addSubCount()
++ void addAttribute(String)
++ void addReference(ReferenceType)
++ void addRealization(String)
++ void addOperation(MyOperation)
++ int getOperationCount()
++ HashSet<String> getAttributeCouplingSet()
++ HashSet<String> getClassImplementInterface()
++ ArrayList<MyOperation> getOperations(String)
++ Map<Visibility,Integer> getOperationVisibility(String)
++ List<Integer> getOperationCouplingDegree(String)
++ void checkR002(HashSet<AttributeClassInformation>)
+}
+class MyState {
+- UmlState umlState
+- HashSet<String> nextState
++ <<Create>> MyState(UmlState)
++ String getId()
++ String getName()
++ void addNextState(String)
++ HashSet<String> getNextState()
+}
+class ClassProcess {
+- {static} ClassProcess CLASS_PROCESS
+- int classCount
+- HashMap<String,String> name2id
+- HashMap<String,MyClass> id2class
+- HashMap<MyClass,Integer> dfn
+- HashMap<MyClass,Integer> low
+- LinkedList<MyClass> stack
+- HashSet<MyClass> vis
+- HashSet<UmlClassOrInterface> result
+- int count
++ {static} ClassProcess getInstance()
++ boolean contains(String)
++ void dealClass(HashSet<UmlClass>)
++ boolean dealAttribute(HashSet<UmlAttribute>)
++ void dealGeneralization(UmlGeneralization)
++ void dealInterfaceRealization(HashSet<UmlInterfaceRealization>)
++ void dealOperation(MyOperation)
++ int getClassCount()
++ int getClassSubClassCount(String)
++ int getClassOperationCount(String)
++ Map<Visibility,Integer> getClassOperationVisibility(String,String)
++ List<Integer> getClassOperationCouplingDegree(String,String)
++ int getClassAttributeCouplingDegree(String)
++ List<String> getClassImplementInterfaceList(String)
++ int getClassDepthOfInheritance(String)
++ int getDepth(String)
++ MyClass getClass(String)
++ String getId(String)
++ void checkR002()
++ void checkR003(HashSet<UmlClassOrInterface>)
+- void getCircle(MyClass)
+}
+class MachineProcess {
+- {static} MachineProcess MACHINE_PROCESS
+- HashMap<String,String> name2id
+- HashMap<String,MyMachine> id2machine
+- HashMap<String,MyMachine> region2machine
+- HashMap<String,MyMachine> transition2machine
++ {static} MachineProcess getInstance()
++ void dealMachine(HashSet<UmlStateMachine>)
++ void dealRegion(HashSet<UmlRegion>)
++ void dealPseudostate(HashSet<UmlPseudostate>)
++ void dealFinalState(HashSet<UmlFinalState>)
++ void dealState(HashSet<UmlState>)
++ boolean dealTransition(HashSet<UmlTransition>)
++ boolean dealEvent(HashSet<UmlEvent>)
++ int getStateCount(String)
++ boolean getStateIsCriticalPoint(String,String)
++ List<String> getTransitionTrigger(String,String,String)
++ String getId(String)
+}
+class MyImplementation {
+- HashSet<UmlClass> umlClasses
+- HashSet<UmlAttribute> umlAttributes
+- HashSet<UmlOperation> umlOperations
+- HashSet<UmlParameter> umlParameters
+- HashSet<UmlGeneralization> umlGeneralizations
+- HashSet<UmlInterfaceRealization> umlInterfaceRealizations
+- HashSet<UmlInterface> umlInterfaces
+- HashSet<UmlAssociation> umlAssociations
+- HashSet<UmlAssociationEnd> umlAssociationEnds
+- HashSet<UmlStateMachine> umlStateMachines
+- HashSet<UmlRegion> umlRegions
+- HashSet<UmlPseudostate> umlPseudostates
+- HashSet<UmlFinalState> umlFinalStates
+- HashSet<UmlState> umlStates
+- HashSet<UmlTransition> umlTransitions
+- HashSet<UmlEvent> umlEvents
+- HashSet<UmlInteraction> umlInteractions
+- HashSet<UmlLifeline> umlLifeLines
+- ArrayList<UmlMessage> umlMessages
+- HashSet<UmlEndpoint> umlEndPoints
+- boolean r001Error
+- boolean r005Error
+- boolean r006Error
+- boolean r007Error
+- boolean r008Error
+- boolean r009Error
++ <<Create>> MyImplementation(UmlElement[])
+- void switchClassDiagram(UmlElement)
+- void switchStateDiagram(UmlElement)
+- void switchSequenceDiagram(UmlElement)
+- void dealClassDiagram()
+- void dealGeneralization()
+- void dealOperation()
+- void dealStateDiagram()
+- void dealSequenceDiagram()
+- void checkR001(String)
++ int getClassCount()
++ int getClassSubClassCount(String)
++ int getClassOperationCount(String)
++ Map<Visibility,Integer> getClassOperationVisibility(String,String)
++ List<Integer> getClassOperationCouplingDegree(String,String)
++ int getClassAttributeCouplingDegree(String)
++ List<String> getClassImplementInterfaceList(String)
++ int getClassDepthOfInheritance(String)
++ int getParticipantCount(String)
++ UmlLifeline getParticipantCreator(String,String)
++ Pair<Integer,Integer> getParticipantLostAndFound(String,String)
++ int getStateCount(String)
++ boolean getStateIsCriticalPoint(String,String)
++ List<String> getTransitionTrigger(String,String,String)
++ void checkForUml001()
++ void checkForUml002()
++ void checkForUml003()
++ void checkForUml004()
++ void checkForUml005()
++ void checkForUml006()
++ void checkForUml007()
++ void checkForUml008()
++ void checkForUml009()
+}
+class MyOperation {
+- UmlOperation umlOperation
+- HashMap<NameableType,Integer> inParameters
+- HashSet<String> refParameters
+- boolean isError
++ <<Create>> MyOperation(UmlOperation)
++ String getId()
++ String getName()
++ String getParentId()
++ Visibility getVisibility()
++ void addInParameter(NameableType)
++ void addRefParameter(String)
++ boolean isError()
++ void setError()
++ boolean isSame(MyOperation)
++ Integer getCouplingDegree()
+}
+class OperationProcess {
+- {static} OperationProcess OPERATION_PROCESS
+- HashMap<String,MyOperation> id2operation
+- {static} HashSet<String> PARAMETER_TYPES
++ {static} OperationProcess getInstance()
++ void dealOperation(MyOperation)
++ void dealParameter(HashSet<UmlParameter>)
+- boolean isError(Direction,NamedType)
++ boolean checkWrong(ArrayList<MyOperation>)
++ boolean checkSame(ArrayList<MyOperation>)
+}
+class MyPseudostate {
+- UmlPseudostate umlPseudostate
+- HashSet<String> nextState
++ <<Create>> MyPseudostate(UmlPseudostate)
++ String getId()
++ void addNextState(String)
++ HashSet<String> getNextState()
+}
+class MyInteraction {
+- UmlInteraction umlInteraction
+- HashMap<String,String> name2id
+- HashSet<String> attributes
+- HashMap<String,MyLifeline> lifelines
+- HashSet<String> endPoints
++ <<Create>> MyInteraction(UmlInteraction)
++ void addAttribute(UmlAttribute)
++ boolean addLifeLine(MyLifeline)
++ int getParticipantCount()
++ void addEndPoint(UmlEndpoint)
++ boolean addMessage(UmlMessage)
++ UmlLifeline getParticipantCreator(String)
++ Pair<Integer,Integer> getParticipantLostAndFound(String)
++ String getId(String)
+}
+class InterfaceProcess {
+- {static} InterfaceProcess INTERFACE_PROCESS
+- HashMap<String,MyInterface> id2interface
+- HashMap<MyInterface,Integer> dfn
+- HashMap<MyInterface,Integer> low
+- LinkedList<MyInterface> stack
+- HashSet<MyInterface> vis
+- HashSet<UmlClassOrInterface> result
+- int count
++ {static} InterfaceProcess getInstance()
++ void dealInterface(HashSet<UmlInterface>)
++ void dealGeneralization(UmlGeneralization)
++ boolean dealAttribute(HashSet<UmlAttribute>)
++ MyInterface getInterface(String)
++ void checkR003(HashSet<UmlClassOrInterface>)
+- void getCircle(MyInterface)
++ boolean checkR001(HashSet<UmlAttribute>)
++ void checkR004(HashSet<UmlClassOrInterface>)
+}
+class MyTransition {
+- UmlTransition umlTransition
+- HashSet<UmlEvent> events
++ <<Create>> MyTransition(UmlTransition)
++ String getId()
++ String getSource()
++ String getTarget()
++ String getGuard()
++ void addEvent(UmlEvent)
++ ArrayList<String> getTrigger()
+}
+class AssociationProcess {
+- {static} AssociationProcess ASSOCIATION_PROCESS
+- HashMap<String,UmlAssociationEnd> id2associationEnd
++ {static} AssociationProcess getInstance()
++ void dealAssociation(HashSet<UmlAssociation>)
++ void dealAssociationEnd(HashSet<UmlAssociationEnd>)
+}
+class MyMachine {
+- UmlStateMachine umlStateMachine
+- MyPseudostate pseudostate
+- HashMap<String,UmlFinalState> finalStates
+- HashMap<String,MyState> states
+- HashMap<String,String> name2state
+- HashMap<String,MyTransition> transitions
+- HashMap<String,HashSet<String>> trigger2guard
+- HashMap<HashSet<String>,String> paths
+- boolean isError
+- boolean r009Error
++ <<Create>> MyMachine(UmlStateMachine)
++ void addPseudostate(MyPseudostate)
++ void addFinalState(UmlFinalState)
++ void addState(MyState)
++ boolean addTransition(MyTransition)
++ void addEvent(UmlEvent)
++ void dealPath()
++ void generatePath(HashSet<String>,MyState)
++ int getStateCount()
++ boolean getStateIsCriticalPoint(String)
++ List<String> getTransitionTrigger(String,String)
++ String getId(String)
++ boolean checkR009()
+}
+
+
+com.oocourse.uml3.interact.format.UserApi <|.. MyImplementation
+@enduml
